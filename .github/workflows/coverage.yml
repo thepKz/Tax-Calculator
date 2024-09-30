@@ -1,0 +1,17 @@
+name: 'coverage'
+on:
+    pull_request_target:
+        branches:
+            - master
+            - main
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  checks: write
+jobs:
+    coverage:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: ArtiomTr/jest-coverage-report-action@v2
