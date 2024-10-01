@@ -1,19 +1,30 @@
 name: 'coverage'
 on:
-    pull_request_target:
-        branches:
-            - master
-            - main
+  pull_request_target:
+    branches:
+      - master
+      - main
 permissions:
-    contents: write
-    checks: write
-    pull-requests: write
+  contents: read
+  checks: write
+  pull-requests: write
 jobs:
-    coverage:
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: Jest Coverage Report
-              uses: ArtiomTr/jest-coverage-report-action@v2
-              with:
-                github-token: ${{ secrets.GITHUB_TOKEN }}   
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Authenticate
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: npm ci
+      - run: npm test -- --coverage
+      - name: Jest Coverage Report
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          test-script: npm test -- --coverage
