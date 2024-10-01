@@ -33,7 +33,7 @@ describe('App component', () => {
   test('calculates tax correctly for minimum salary', () => {
     render(<App />);
     fillFormAndSubmit('5000000', '5000000', '0');
-    checkTaxResult('0');
+    checkTaxResult('0'); 
   });
 
   // Test case for negative salary

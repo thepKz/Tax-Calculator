@@ -5,13 +5,15 @@ on:
             - master
             - main
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-  checks: write
+    contents: write
+    checks: write
+    pull-requests: write
 jobs:
     coverage:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - uses: ArtiomTr/jest-coverage-report-action@v2
+            - name: Jest Coverage Report
+              uses: ArtiomTr/jest-coverage-report-action@v2
+              with:
+                github-token: ${{ secrets.GITHUB_TOKEN }}   
